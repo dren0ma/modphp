@@ -1,0 +1,78 @@
+mysql -u root;
+CREATE TABLE materials (
+    -> id INT AUTO_INCREMENT NOT NULL,
+    -> shirt_id INT,
+    -> material varchar(255),
+    -> PRIMARY KEY(id),
+    -> FOREIGN KEY(shirt_id)
+    -> REFERENCES Shirts(id)
+    -> ON UPDATE CASCADE
+    -> ON DELETE SET NULL
+    -> );
+
+DESCRIBE materials;
+SELECT * FROM materials;
+
+INSERT INTO shirts (size, price) VALUES (S, 450), (M, 500), (L, 550), (XL, 600);
+
+
+SELECT price FROM 
+
+SELECT price FROM shirts WHERE 
+id = (SELECT shirt_id FROM materials WHERE material = 'cotton';
+
+
+SELECT COUNT(*) FROM materials WHERE material = 'cotton';
+* = row
+<column> = column
+
+aggregate operators
+COUNT()
+SUM()
+MIN()
+MAX()
+AVG()
+
+SELECT MIN(price) FROM Shirts;
+SELECT MIN(price) FROM Shirts WHERE ;
+
+SELECT genre, AVG(LENGTH) FROM songs GROUP BY genre;
+SELECT genre, AVG(LENGTH) FROM songs GROUP BY genre HAVING AVG(length) > 250;
+SELECT genre FROM songs GROUP BY genre HAVING COUNT(*) > 2;
+SELECT genre, COUNT(*) AS number_of_songs FROM songs GROUP BY genre HAVING COUNT(*) > 2;
+SELECT name AS album_name FROM albums JOIN songs ON(albums.id = album_id) GROUP BY name HAVING (COUNT(albums.id) > 2);
+
+
+SELECT DISTINCT firstName, lastName FROM employees 
+JOIN customers ON(employees.employeeNumber = customers.salesRepEmployeeNumber) 
+JOIN offices ON(employees.officeCode = offices.officeCode) 
+WHERE (customers.country = offices.country);
+
+SELECT DISTINCT firstName, lastName, customers.country FROM employees 
+JOIN customers ON(employees.employeeNumber = customers.salesRepEmployeeNumber)
+JOIN offices ON(employees.officeCode = offices.officeCode) 
+WHERE (customers.country = offices.country);
+
+SELECT firstName, lastName FROM employees WHERE reportsTo = (SELECT employeeNumber FROM employees WHERE firstName = 'Anthony' AND lastName = 'Bow');
+
+SELECT reporting.lastName, reporting.firstName, boss.lastName, boss.firstName FROM employees AS reporting JOIN employees AS boss ON(boss.employeeNumber = reporting.reportsTo) WHERE boss.firstName = 'Anthony' AND boss.lastName = 'Bow';
+
+SELECT customerName FROM customers WHERE customerName NOT LIKE '%A%';
+
+SELECT productLine FROM products WHERE productDescription LIKE '%state of the art%';
+
+SELECT customerName, country FROM customers WHERE country IN('USA', 'France', 'Canada', 'UK', 'Italy');
+
+
+SELECT productName, buyPrice, MSRP FROM products WHERE buyPrice = (SELECT MAX(buyPrice) FROM products) OR MSRP = (SELECT MAX(MSRP) FROM products);
+
+SELECT productName, buyPrice, MSRP FROM products ORDER BY buyPrice DESC LIMIT 3;
+
+SELECT COUNT(customerName) FROM customers WHERE country = 'UK';
+
+SELECT customerName FROM customers WHERE customerNumber = (SELECT customerNumber FROM orders GROUP BY customerNumber ORDER BY COUNT(customerNumber) DESC LIMIT 1);
+
+SELECT customerName, SUM(od.quantityOrdered) FROM customers c JOIN orders o ON(c.customerNumber = o.customerNumber) JOIN orderdetails od ON(o.orderNumber = od.orderNumber) GROUP BY c.customerName ORDER BY SUM(od.quantityOrdered) DESC LIMIT 5;
+
+
+
