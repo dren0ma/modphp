@@ -1,16 +1,16 @@
 <?php 
 
 $index = $_POST['index'];
-$string = file_get_contents("assets/items.json");
-$items = json_decode($string, true);
-
-$img = $items[$index]['img'];
-$name = $items[$index]['name'];
-$description = $items[$index]['description'];
-$price = $items[$index]['price'];
+// $string = file_get_contents("assets/items.json");
+// $items = json_decode($string, true);
+require 'connection.php';
+$sql = "SELECT * FROM items WHERE id = '$index'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+extract($row);
 
 echo "<div class='row'>";
-echo "<div class='col-xs-4-item_display'><img class='imgedit' src='$img'>";
+echo "<div class='col-xs-4-item_display'><img class='imgedit' src='$image'>";
 //get pass index to edit.php
 echo "<form action='delete.php?index=$index' method='post'>Name: <input type='text' name='name' value='$name'><br>";
 echo "Description: <textarea name='description'>$description</textarea><br>";

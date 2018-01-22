@@ -1,8 +1,10 @@
 <?php
 
 $index = $_GET['index'];
-$string = file_get_contents("assets/items.json");
-$items = json_decode($string, true);
+require 'connection.php';
+$sql = "DELETE FROM items WHERE id = '$index'";
+mysqli_query($conn, $sql) or die (mysqli_error($conn));
+
 
 //delete task from array $items
 
@@ -12,13 +14,13 @@ $items = json_decode($string, true);
 
 //array_splice($items, $index, 1); last resort
 
-unset($items[$index]);
+// unset($items[$index]);
 
 
 //update json file
-$file = fopen('assets/items.json', 'w');
-fwrite($file, json_encode($items, JSON_PRETTY_PRINT));
-fclose($file);
+// $file = fopen('assets/items.json', 'w');
+// fwrite($file, json_encode($items, JSON_PRETTY_PRINT));
+// fclose($file);
 
 echo "Item Deleted";
 
