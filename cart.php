@@ -1,6 +1,6 @@
 <?php
-$string = file_get_contents("assets/items.json");
-$items = json_decode($string, true);
+// $string = file_get_contents("assets/items.json");
+// $items = json_decode($string, true);
 $total = 0;
 
 function display_title(){
@@ -8,6 +8,7 @@ function display_title(){
 }
 
 function display_content(){
+	require 'connection.php';
 	global $items;
 	global $total;	
 	echo "<div class=row>
@@ -17,14 +18,19 @@ function display_content(){
 	//foreach item iteration
 	
 	foreach ($_SESSION['cart'] as $index => $quantity) {
-			$img = $items[$index]['img'];
-			$name = $items[$index]['name'];
-			$description = $items[$index]['description'];
-			$price = $items[$index]['price'];
+		$sql = "SELECT * FROM items WHERE id = '$index'";
+		$result = mysqli_query($conn, $sql);
+		$row = mysqli_fetch_assoc($result);
+		extract($row);							//auto create variables from column_name
+
+		// $img = $row['image'];
+		// $name = $row['name'];
+		// $description = $row['description'];
+		// $price = $row['price'];
 			
 			
 			if (isset($_SESSION['cart'])){
-				echo "<div class='col-xs-4 item_display'><img src='".$img."'>";
+				echo "<div class='col-xs-4 item_display'><img src='".$image."'>";
 				echo "<h5>".$name."</h5>";
 				echo "Price: Php".$price."<br>";
 				echo "Quantity: ".$quantity."<br>";

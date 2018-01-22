@@ -40,7 +40,7 @@
 	  </div>
 	  <div class="form-group"> 
 	    <div class="col-sm-offset-2 col-sm-10">
-	      <input type="submit" class="btn btn-default" name="register" value="Register" disabled>
+	      <input type="submit" class="btn btn-default" name="register" value="Register">
 	    </div>
 	  </div>
 	</form>
@@ -52,7 +52,7 @@
 		<input type="submit" name="register" value="Register" disabled>
 	</form> -->
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		var users;
 		$.getJSON("assets/users.json", function(json){
 			users = json
@@ -81,7 +81,7 @@
 			}
 		})
 		
-	</script>
+	</script> -->
 <?php 
 	} 
 

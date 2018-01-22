@@ -1,0 +1,37 @@
+[//GET TODOS FROM GIT
+    {
+        "name": "Neapolitan",
+        "description": "Mozzarella, tomatoes, basil leaves, oregano, olive oil",
+        "price": "500",
+        "img": "img\/pizza.jpg",
+        "category": "Pizza"
+    },
+    {
+        "name": "Spaghetti Bolognese",
+        "description": "Slow braised beef and tomato",
+        "price": "300",
+        "img": "img\/pasta.jpg",
+        "category": "Pasta"
+    },
+    {
+        "name": "Pomodoro",
+        "description": "Classic tomato sauce, basil, parmesan",
+        "price": "250",
+        "img": "img\/pasta.jpg",
+        "category": "Pasta"
+    },
+    {
+        "name": "Mushroom Truffle",
+        "description": "Mushroom, basil, truffle oil fontinella, goat cheese, mozzarella, parmigiano",
+        "price": "600",
+        "img": "img\/pizza3.jpg",
+        "category": "Pizza"
+    },
+    {
+        "name": "Navona",
+        "description": "Fire Blistered Tomatoes, Marinated Carrots, Shaved Onion, Crispy Bread, Basil Balsamic",
+        "price": "100",
+        "img": "img\/salad.jpg",
+        "category": "Salad"
+    }
+]

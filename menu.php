@@ -1,32 +1,45 @@
 <?php
 //get item list from json file
-$string = file_get_contents("assets/items.json");
-$items = json_decode($string, true);
+// $string = file_get_contents("assets/items.json");
+// $items = json_decode($string, true);
 
 function display_title(){
 	echo "Menu Page";
 }
 
 function display_content(){
-	global $items;
-	$categories = array_unique(array_column($items,'category'));
+	// global $items;
+	// $categories = array_unique(array_column($items,'category'));
+
 	
 	$filter = 'All';
 	if(isset($_GET['category'])){
 		$filter = $_GET['category'];
+	// $filter = isset($_GET['category']) ? $_GET['category'] : 'All';   if/else ternary
 	}
 
-	// $filter = isset($_GET['category']) ? $_GET['category'] : 'All';   if/else ternary
+require 'connection.php';
+
 	
 	echo "<form><select name='category'><option>All</option>";
-	foreach ($categories as $category) {
-		if ($filter == $category) {
-			echo "<option selected>$category</option>";
+	$sql = "SELECT * FROM categories";
+	$result = mysqli_query($conn, $sql);
+	while ($row = mysqli_fetch_assoc($result)){
+		$id = $row['id'];
+		$category = $row['name'];
+
+		
+
+		if ($filter == $id) {
+			echo "<option selected value='$id'>$category</option>";
 		}
 		else {
-			echo "<option>$category</option>";
+			echo "<option value='$id'>$category</option>";
 		}
 		// echo $filter == $category ? "<option selected>$category</option>" : "<option>$category</option>";   if/else ternary
+	
+	
+
 	}
 	echo "</select><button class='btn'>Search</button></form>";
 
@@ -40,20 +53,25 @@ function display_content(){
 	echo "<a href='delete.php?index=$index'><input type='button' class='btn btn-danger' value='Delete'></a>";
 	echo "</form></div></div>";*/
 
+$sql = "SELECT * FROM items";
+$result = mysqli_query($conn, $sql);
+
 	//foreach item iteration
 	echo "<div class='row'>";
-	foreach ($items as $index => $item) {
-		if ($filter == 'All' || $item['category'] == $filter) {
-			echo "<div class='col-xs-4 item_display'><img src='".$item['img']."'>";
+	while($item = mysqli_fetch_assoc($result)) {
+		$index = $item['id'];
+	// foreach ($items as $index => $item) {
+		if ($filter == 'All' || $item['category_id'] == $filter) {
+			echo "<div class='col-xs-4 item_display'><img src='".$item['image']."'>";
 			echo "<h5>".$item['name']."</h5>";
-			echo "Price: Php".$item['price']."<br>";
+			echo "Price: Php ".$item['price']."<br>";
 			
-			if (isset($_SESSION['username']) && $_SESSION['username'] == 'admin'){
+			if (isset($_SESSION['username']) && $_SESSION['role'] == 'admin'){
 				echo "<button class='btn btn-primary render_modal_body' data-toggle='modal' data-target='#myModal' data-index='$index'>Edit</button>";
 				echo "<button class='btn btn-danger render_modal_body_delete' data-toggle='modal' data-target='#myModalDelete' data-index='$index'>Delete</button>";
 			}
 			else if (isset($_SESSION['username'])){
-				echo "<form action='addtocart.php?index=$index' method='POST'><input type='number' min=0 name='itemqty'>";
+				echo "<form action='addtocart.php?index=$index' method='POST'><input type='number' min=1 value='1' name='itemqty'>";
 				echo "<button class='btn btn-success cart-button' data-index='$index'>Add to Cart</button></form>";
 			}
 			echo "</div>";
